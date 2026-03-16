@@ -9,7 +9,7 @@ int main(void) {
 	cin.tie(NULL);
 	cout.tie(NULL);
 
-	int n, max;
+	int n = 0, max_val = 0;
 	double sum = 0, avg = 0;
 
 	cin >> n;
@@ -18,16 +18,14 @@ int main(void) {
 	for (int i = 0; i < n; i++)
 		cin >> v[i];
 
-	sort(v.begin(), v.end(), greater<int>());
-	max = v[0];
+	auto it = max_element(v.begin(), v.end());
+	max_val = *it;
 
 	for (int x : v)
-		sum += double(x) / max * 100;
+		sum += double(x) / max_val * 100;
 	avg = sum / n;
 
 	cout << avg;
-
-
 
 	return 0;
 }
