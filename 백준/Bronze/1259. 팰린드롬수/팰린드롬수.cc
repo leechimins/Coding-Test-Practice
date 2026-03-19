@@ -9,15 +9,13 @@ int main(void) {
 	cout.tie(NULL);
 
 	string num = "";
-	cin >> num;
 
-	while (num != "0") {
+	while (cin >> num && num != "0") {
 		string res(num.rbegin(), num.rend());
 		if (num == res)
 			cout << "yes\n";
 		else
 			cout << "no\n";
-		cin >> num;
 	}
 
 	return 0;
