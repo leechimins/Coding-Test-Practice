@@ -15,11 +15,8 @@ int main(void) {
 		len++;
 
 	for (ans = n - len * 9; notFound && ans <= n; ans++) {
-		sum = ans, tmp = ans;
-		for (int i = 0; i < len; i++) {
+		for (sum = ans, tmp = ans; tmp > 0; tmp /= 10)
 			sum += tmp % 10;
-			tmp /= 10;
-		}
 		if (sum == n) {
 			notFound = false;
 			break;
