@@ -11,28 +11,16 @@ struct Person {
 
 	Person(int x, int y) : x(x), y(y) {}
 
-	auto operator<=>(const Person& other) const {
-		auto cmpX = x <=> other.x;
-		auto cmpY = y <=> other.y;
+	partial_ordering operator<=>(const Person& other) const {
+		if (x > other.x && y > other.y)
+			return partial_ordering::greater;
 
-		if (cmpX != cmpY)
-			return strong_ordering::equal;
+		if (x < other.x && y < other.y)
+			return partial_ordering::less;
 
-		return cmpX;
-	}
-
-	void print() const {
-		cout << rank << " ";
+		return partial_ordering::unordered;
 	}
 };
-
-void myCompare(Person& a, Person& b) {
-	if (is_lt(a <=> b))
-		(a.rank)++;
-	else if (is_gt(a <=> b)) {
-		(b.rank)++;
-	}
-}
 
 int main(void) {
 	ios_base::sync_with_stdio(false);
@@ -50,13 +38,19 @@ int main(void) {
 	}
 
 	for (int i = 0; i < n; i++) {
-		for (int j = i; j < n; j++) {
-			myCompare(v[i], v[j]);
+		for (int j = i + 1; j < n; j++) {
+			if (is_lt(v[i] <=> v[j])) {
+				v[i].rank++;
+			}
+			else if (is_gt(v[i] <=> v[j])) {
+				v[j].rank++;
+			}
 		}
 	}
 
-	for (int i = 0; i < n; i++)
-		v[i].print();
+	for (const auto& p : v) {
+		cout << p.rank << " ";
+	}
 
 	return 0;
 }
